@@ -1,0 +1,137 @@
+# filepath: data/reqs.yml
+project:
+  code: SMARTTHRM
+  summary: Requirements for the SMARTTHRM project, a connected smart thermostat with app and cloud integration.
+  external_references:
+  - label: Market Requirements Document
+    url: https://example.com/docs/mrd
+  - IEC-60730
+  - EN-ISO-9241
+requirements:
+- id: REQ_SMARTTHRM_000001
+  title: Temperature Control
+  description: "The system shall maintain the setpoint temperature within \xB10.5\xB0 C under steady-state conditions."
+  rationale: To provide consistent user comfort and comply with energy efficiency standards.
+  verification: Test
+  priority: Critical
+  acceptance_criteria: Setpoint maintained within limits for 95% of operating time.
+  safety_classification: SIL1
+  linked_features:
+  - FEATURE-001
+  deprecated_reason: ''
+  domain: control
+  metadata:
+    release: '1.0'
+    team: firmware
+  external_references:
+  - THERMAL-REQ-01
+  children:
+  - id: REQ_SMARTTHRM_000002
+    title: PID Loop Implementation
+- id: REQ_SMARTTHRM_000005
+  title: User Interface
+  description: The thermostat shall provide a local display and capacitive buttons for user interaction.
+  rationale: To allow control without needing the mobile app.
+  verification: Test
+  priority: High
+  acceptance_criteria: Users can view temperature and adjust settings locally.
+  domain: UI
+  metadata:
+    release: '1.0'
+    team: ui
+  external_references:
+  - UX-REQ-03
+  children:
+  - id: REQ_SMARTTHRM_000006
+    title: Display Requirements
+    priority: Medium
+  - id: REQ_SMARTTHRM_000007
+    title: Touch Interface Response
+    priority: Medium
+- id: REQ_SMARTTHRM_000008
+  title: Connectivity
+  description: The thermostat shall support Wi-Fi and Bluetooth LE for local and cloud connectivity.
+  rationale: To allow smartphone pairing and remote access.
+  verification: Test
+  priority: High
+  domain: connectivity
+  children:
+  - id: REQ_SMARTTHRM_000009
+    title: Wi-Fi Security
+    priority: High
+  - id: REQ_SMARTTHRM_000010
+    title: BLE Advertising
+    priority: Medium
+- id: REQ_SMARTTHRM_000011
+  title: Security
+  description: The device shall implement secure boot, firmware signing, and secure storage for credentials.
+  rationale: To protect against unauthorised firmware or data breaches.
+  verification: Review
+  priority: Critical
+  domain: security
+  children:
+  - id: REQ_SMARTTHRM_000012
+    title: Secure Boot
+    priority: High
+  - id: REQ_SMARTTHRM_000013
+    title: Credential Storage
+    priority: High
+- id: REQ_SMARTTHRM_000014
+  title: Access Control
+  description: The system shall implement role-based access control (RBAC) for local and remote access.
+  rationale: To limit functionality based on user roles.
+  verification: Review
+  priority: High
+  children:
+  - id: REQ_SMARTTHRM_000015
+    title: Admin and User Roles
+    priority: Medium
+  - id: REQ_SMARTTHRM_000016
+    title: Authentication Timeout
+    priority: Medium
+- id: REQ_SMARTTHRM_000017
+  title: Display
+  description: "The thermostat shall include a 2.4\u201D TFT LCD with backlight and 240x320 resolution."
+  rationale: To provide clear information display.
+  verification: Inspection
+  priority: Medium
+- id: REQ_SMARTTHRM_000018
+  title: API Integration
+- id: REQ_SMARTTHRM_000021
+  title: Thermostatic Function
+- id: REQ_SMARTTHRM_000024
+  title: Safety & Compliance
+- id: REQ_SMARTTHRM_000028
+  title: System Configuration & Storage
+- id: REQ_SMARTTHRM_000032
+  title: Test Requirement 32
+  - DOC-32
+- id: REQ_SMARTTHRM_000033
+  title: Test Requirement 33
+  - DOC-33
+- id: REQ_SMARTTHRM_000034
+  title: Test Requirement 34
+  - DOC-34
+- id: REQ_SMARTTHRM_000035
+  title: Test Requirement 35
+  - DOC-35
+- id: REQ_SMARTTHRM_000036
+  title: Test Requirement 36
+  - DOC-36
+- id: REQ_SMARTTHRM_000037
+  title: Test Requirement 37
+  - DOC-37
+- id: REQ_SMARTTHRM_000038
+  title: Test Requirement 38
+  - DOC-38
+- id: REQ_SMARTTHRM_000039
+  title: Test Requirement 39
+  - DOC-39
+- id: REQ_SMARTTHRM_000040
+  title: Test Requirement 40
+  - DOC-40
+- id: REQ_SMARTTHRM_000041
+  title: Test Requirement 41
+  - DOC-41
+- id: REQ_SMARTTHRM_000050
+  title: Deep Structure Example

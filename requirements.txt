@@ -1,1 +1,7 @@
 # Add your project dependencies here
+
+# Requirements for vibe-sandbox
+streamlit
+pyyaml
+jsonschema
+streamlit-tree-select

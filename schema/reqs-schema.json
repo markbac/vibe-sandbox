@@ -1,0 +1,131 @@
+# filepath: schema/reqs-schema.json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/requirements.schema.json",
+  "title": "Hierarchical Requirements Schema",
+  "description": "A schema for defining hierarchical requirements with implementation tracking and cross-references.",
+  "type": "object",
+  "properties": {
+    "requirements": {
+      "type": "array",
+      "description": "Top-level list of requirement entries.",
+      "items": {
+        "$ref": "#/$defs/requirement"
+      }
+    },
+    "project": {
+      "type": "object",
+      "description": "Optional project-level metadata and configuration.",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Optional short code used as a prefix for requirement IDs (e.g. REQ_MYPROJECT_000001)."
+        },
+        "summary": {
+          "type": "string",
+          "description": "High-level description of the project or product."
+        },
+        "external_references": {
+          "type": "array",
+          "description": "List of external references related to the overall project.",
+          "items": {}
+        }
+      },
+      "required": [
+        "summary"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "requirements"
+  ],
+  "$defs": {
+    "requirement": {
+      "type": "object",
+      "description": "A single requirement node, which may contain child requirements.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Required. Unique ID in REQ-XXX or REQ-XXX.YYY format.",
+          "pattern": "^(REQ(_[A-Z0-9]+)?_[0-9]+|REQ-[0-9]+(\\.[0-9]+)*)$",
+          "examples": []
+        },
+        "title": {
+          "type": "string",
+          "description": "Required. Short title for the requirement.",
+          "examples": []
+        },
+        "description": {
+          "type": "string",
+          "description": "Required. Markdown-formatted description, may include code blocks.",
+          "examples": []
+        },
+        "tags": {
+          "type": "array",
+          "description": "Optional. List of tags for filtering or classification.",
+          "items": {},
+          "uniqueItems": true,
+          "examples": []
+        },
+        "status": {
+          "type": "object",
+          "description": "Optional. Flags for tracking implementation and validation.",
+          "properties": {},
+          "additionalProperties": false,
+          "examples": []
+        },
+        "cross_references": {
+          "type": "object",
+          "description": "Optional. Link this requirement to others using dependency relations.",
+          "properties": {},
+          "additionalProperties": false,
+          "examples": []
+        },
+        "children": {
+          "type": "array",
+          "description": "Optional. Child requirements (nested structure).",
+          "items": {}
+        },
+        "external_references": {
+          "type": "array",
+          "description": "Optional. List of external references such as document IDs, URLs, ticket numbers.",
+          "items": {}
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "description": "Optional. List of acceptance criteria for the requirement.",
+          "items": {
+            "type": "string"
+          },
+          "examples": []
+        },
+        "linked_features": {
+          "type": "array",
+          "description": "Optional. Associated feature or epic IDs from project management tools."
+        },
+        "deprecated_reason": {},
+        "domain": {},
+        "metadata": {},
+        "rationale": {},
+        "verification": {},
+        "priority": {},
+        "traceability": {},
+        "risk": {},
+        "release": {},
+        "state": {}
+      },
+      "required": [
+        "id",
+        "title",
+        "description"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {},
+        {}
+      ]
+    }
+  },
+  "version": "1.1.0"
+}

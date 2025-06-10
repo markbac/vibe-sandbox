@@ -1,0 +1,149 @@
+# filepath: schema/reqs-schema.yml
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://example.com/requirements.schema.json
+title: Hierarchical Requirements Schema
+description: A schema for defining hierarchical requirements with implementation tracking
+  and cross-references.
+type: object
+properties:
+  requirements:
+    type: array
+    description: Top-level list of requirement entries.
+    items:
+      $ref: '#/$defs/requirement'
+  project:
+    type: object
+    description: Optional project-level metadata and configuration.
+    properties:
+      code:
+        type: string
+        description: Optional short code used as a prefix for requirement IDs (e.g.
+          REQ_MYPROJECT_000001).
+      summary:
+        type: string
+        description: High-level description of the project or product.
+      external_references:
+        type: array
+        description: List of external references related to the overall project.
+        items:
+          oneOf:
+    required:
+    - summary
+    additionalProperties: false
+required:
+- requirements
+$defs:
+  requirement:
+    type: object
+    description: A single requirement node, which may contain child requirements.
+    properties:
+      id:
+        type: string
+        description: Required. Unique ID in REQ-XXX or REQ-XXX.YYY format.
+        pattern: ^(REQ(_[A-Z0-9]+)?_[0-9]+|REQ-[0-9]+(\.[0-9]+)*)$
+        examples:
+        - Example id value
+      title:
+        type: string
+        description: Required. Short title for the requirement.
+        examples:
+        - Cloud Sync Retry
+      description:
+        type: string
+        description: Required. Markdown-formatted description, may include code blocks.
+        examples:
+        - The system shall retry the cloud sync every 30 seconds after a failure.
+      tags:
+        type: array
+        description: Optional. List of tags for filtering or classification.
+        items:
+          type: string
+          - System
+        uniqueItems: true
+        examples:
+        - - example-tags-item
+      status:
+        type: object
+        description: Optional. Flags for tracking implementation and validation.
+        properties:
+          implemented:
+        additionalProperties: false
+        examples:
+        - key: example-status-value
+      cross_references:
+        type: object
+        description: Optional. Link this requirement to others using dependency relations.
+        properties:
+          depends_on:
+        additionalProperties: false
+        examples:
+        - key: example-cross_references-value
+      children:
+        type: array
+        description: Optional. Child requirements (nested structure).
+        items:
+          $ref: '#/$defs/requirement'
+      external_references:
+        type: array
+        description: Optional. List of external references such as document IDs, URLs,
+          ticket numbers.
+        items:
+          oneOf:
+      acceptance_criteria:
+        type: array
+        description: Optional. List of acceptance criteria for the requirement.
+        items:
+          type: string
+        examples:
+        - - example-acceptance_criteria-item
+      linked_features:
+        type: array
+        - - example-linked_features-item
+      deprecated_reason:
+        type: string
+        - Example deprecated_reason value
+      domain:
+        type: string
+        - Example domain value
+      metadata:
+        type: object
+        - key: example-metadata-value
+      rationale:
+        type: string
+        - Example rationale value
+      verification:
+        type: string
+        - Test
+      priority:
+        type: string
+        - High
+      traceability:
+        type: object
+        - key: example-traceability-value
+      risk:
+        type: string
+        - Example risk value
+      release:
+        type: string
+        - Release Candidate
+      state:
+        type: string
+        - approved
+    required:
+    - id
+    - title
+    - description
+    additionalProperties: false
+    allOf:
+    - if:
+        properties:
+          state:
+      then:
+        required:
+        - deprecated_reason
+    - if:
+        properties:
+          status:
+      then:
+        properties:
+version: 1.1.0

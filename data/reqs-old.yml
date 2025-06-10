@@ -1,0 +1,160 @@
+# filepath: data/reqs-old.yml
+requirements:
+- id: REQ_001
+  title: Temperature Control
+  description: 'The system **shall** control room temperature based on:\n\n    Accuracy and responsiveness are critical to user comfort.'
+  tags:
+  - core
+  - control
+  status:
+    implemented: true
+    verified: false
+  children:
+  - id: REQ_008
+    title: Temperature Accuracy
+  - id: REQ_009
+    title: Scheduled Profiles
+  - id: REQ_010
+    title: Manual Override
+  rationale: This requirement is included based on system needs.
+  verification: Test
+  priority: High
+  acceptance_criteria: System must pass all functional tests.
+  safety_classification: SIL2
+  linked_features:
+  - FEATURE-1234
+  deprecated_reason: ''
+  domain: core-system
+  metadata:
+    release: v1.0
+    team: firmware
+  external_references:
+  - JIRA-5678
+- id: REQ_002
+  title: User Interface
+  description: 'Users shall be able to interact with the system via:\n\n    - A simplified fallback control method'
+  tags:
+  - ui
+  - usability
+  children:
+  - id: REQ_011
+    title: Local Touchscreen UI
+    - hmi
+  - id: REQ_012
+    title: Remote Web UI
+  - id: REQ_013
+    title: Safe UI Constraints
+  rationale: This requirement is included based on system needs.
+  verification: Test
+  priority: High
+  acceptance_criteria: System must pass all functional tests.
+  safety_classification: SIL2
+  linked_features:
+  - FEATURE-1234
+  deprecated_reason: ''
+  domain: core-system
+  metadata:
+    release: v1.0
+    team: firmware
+  external_references:
+  - JIRA-5678
+- id: REQ_003
+  title: Connectivity
+  description: The device must support **multiple communication paths** for both user access and smart home integration.
+  tags:
+  - iot
+  - integration
+  children:
+  - id: REQ_014
+    title: Wi-Fi Support
+  - id: REQ_015
+    title: Matter Support
+    - smart-home
+  - id: REQ_016
+    title: Bluetooth Support
+    - fallback
+  rationale: This requirement is included based on system needs.
+  verification: Test
+  priority: High
+  acceptance_criteria: System must pass all functional tests.
+  safety_classification: SIL2
+  linked_features:
+  - FEATURE-1234
+  deprecated_reason: ''
+  domain: core-system
+  metadata:
+    release: v1.0
+    team: firmware
+  external_references:
+  - JIRA-5678
+- id: REQ_004
+  title: Safety & Compliance
+  description: The system shall comply with all relevant **electrical and embedded safety standards**, and shall fail safely under error.
+  tags:
+  - safety
+  - regulation
+  children:
+  - id: REQ_017
+    title: Overtemperature Shutdown
+  - id: REQ_018
+    title: EN60730 Compliance
+  - id: REQ_019
+    title: Watchdog Support
+  rationale: This requirement is included based on system needs.
+  verification: Test
+  priority: High
+  acceptance_criteria: System must pass all functional tests.
+  safety_classification: SIL2
+  linked_features:
+  - FEATURE-1234
+  deprecated_reason: ''
+  domain: core-system
+  metadata:
+    release: v1.0
+    team: firmware
+  external_references:
+  - JIRA-5678
+- id: REQ_005
+  title: Security & Access Control
+  description: Access to configuration and APIs must be controlled by **role and identity**, with encryption in all external interfaces.
+  tags:
+  - security
+  - auth
+  children:
+  - id: REQ_020
+    title: User Roles
+  - id: REQ_021
+    title: PIN Protection
+  - id: REQ_022
+    title: TLS for Remote Access
+  rationale: This requirement is included based on system needs.
+  verification: Test
+  priority: High
+  acceptance_criteria: System must pass all functional tests.
+  safety_classification: SIL2
+  linked_features:
+  - FEATURE-1234
+  deprecated_reason: ''
+  domain: core-system
+  metadata:
+    release: v1.0
+    team: firmware
+  external_references:
+  - JIRA-5678
+- id: REQ_006
+  title: System Configuration & Storage
+  description: Configuration settings and user data shall be stored in **non-volatile memory**, with support for backup/restore.
+  tags:
+  - nvm
+  - persistence
+  children:
+  - id: REQ_023
+    title: Store Settings in NVM
+  - id: REQ_024
+    title: Import/Export Support
+  - id: REQ_027
+    title: Firmware Update Mechanism
+  - JIRA-5678
+- id: REQ_007
+  title: External API Support
+  - JIRA-5678
