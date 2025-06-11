@@ -17,23 +17,37 @@
       "type": "object",
       "description": "Optional project-level metadata and configuration.",
       "properties": {
-        "code": {
-          "type": "string",
-          "description": "Optional short code used as a prefix for requirement IDs (e.g. REQ_MYPROJECT_000001)."
-        },
-        "summary": {
-          "type": "string",
-          "description": "High-level description of the project or product."
+        "name": { "type": "string", "description": "Project name." },
+        "version": { "type": "string", "description": "Project version." },
+        "code": { "type": "string", "description": "Optional short code used as a prefix for requirement IDs (e.g. REQ_MYPROJECT_000001)." },
+        "summary": { "type": "string", "description": "High-level description of the project or product." },
+        "description": { "type": "string", "description": "Detailed project description." },
+        "stakeholders": {
+          "type": "array",
+          "description": "List of project stakeholders.",
+          "items": { "type": "string" }
         },
         "external_references": {
           "type": "array",
           "description": "List of external references related to the overall project.",
-          "items": {}
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "description": "Structured reference.",
+                "properties": {
+                  "label": { "type": "string", "description": "Short name or description." },
+                  "url": { "type": "string", "format": "uri", "description": "URL or URI of the reference." }
+                },
+                "required": ["label"],
+                "additionalProperties": false
+              },
+              { "type": "string", "description": "Unstructured external reference string." }
+            ]
+          }
         }
       },
-      "required": [
-        "summary"
-      ],
+      "required": ["name", "version", "summary", "description", "stakeholders"],
       "additionalProperties": false
     }
   },
@@ -45,85 +59,114 @@
       "type": "object",
       "description": "A single requirement node, which may contain child requirements.",
       "properties": {
-        "id": {
-          "type": "string",
-          "description": "Required. Unique ID in REQ-XXX or REQ-XXX.YYY format.",
-          "pattern": "^(REQ(_[A-Z0-9]+)?_[0-9]+|REQ-[0-9]+(\\.[0-9]+)*)$",
-          "examples": []
-        },
-        "title": {
-          "type": "string",
-          "description": "Required. Short title for the requirement.",
-          "examples": []
-        },
-        "description": {
-          "type": "string",
-          "description": "Required. Markdown-formatted description, may include code blocks.",
-          "examples": []
-        },
+        "id": { "type": "string", "description": "Required. Unique ID in REQ-XXX or REQ-XXX.YYY format.", "pattern": "^(REQ(_[A-Z0-9]+)?_[0-9]+|REQ-[0-9]+(\\.[0-9]+)*)$" },
+        "title": { "type": "string", "description": "Required. Short title for the requirement." },
+        "description": { "type": "string", "description": "Required. Markdown-formatted description, may include code blocks." },
+        "type": { "type": "string", "description": "Requirement type (e.g. Functional, Non-Functional).", "enum": ["Functional", "Non-Functional"] },
+        "category": { "type": "string", "description": "Requirement category (e.g. Functionality, Performance, Security, Usability).", "enum": ["Functionality", "Performance", "Security", "Usability", "Reliability", "Maintainability", "Portability", "Other"] },
         "tags": {
           "type": "array",
           "description": "Optional. List of tags for filtering or classification.",
-          "items": {},
-          "uniqueItems": true,
-          "examples": []
+          "items": { "type": "string", "enum": ["UI", "API", "Security", "Performance", "Functional", "Non-Functional", "Hardware", "Firmware", "System"] },
+          "uniqueItems": true
         },
         "status": {
           "type": "object",
           "description": "Optional. Flags for tracking implementation and validation.",
-          "properties": {},
-          "additionalProperties": false,
-          "examples": []
+          "properties": {
+            "implemented": { "type": "boolean", "description": "Optional. True if implemented. Default: false." },
+            "verified": { "type": "boolean", "description": "Optional. True if verified. Default: false." },
+            "removed": { "type": "boolean", "description": "Optional. Set true if the requirement is deprecated or withdrawn." }
+          },
+          "additionalProperties": false
         },
         "cross_references": {
           "type": "object",
           "description": "Optional. Link this requirement to others using dependency relations.",
-          "properties": {},
-          "additionalProperties": false,
-          "examples": []
+          "properties": {
+            "depends_on": { "type": "array", "description": "Optional. List of requirement IDs this one depends on.", "items": { "type": "string" } },
+            "related_to": { "type": "array", "description": "Optional. General linkage to other related requirements.", "items": { "type": "string" } },
+            "conflicts_with": { "type": "array", "description": "Optional. Requirements that contradict this one.", "items": { "type": "string" } },
+            "duplicated_by": { "type": "array", "description": "Optional. Requirements that duplicate this one.", "items": { "type": "string" } }
+          },
+          "additionalProperties": false
         },
-        "children": {
-          "type": "array",
-          "description": "Optional. Child requirements (nested structure).",
-          "items": {}
-        },
+        "children": { "type": "array", "description": "Optional. Child requirements (nested structure).", "items": { "$ref": "#/$defs/requirement" } },
         "external_references": {
           "type": "array",
           "description": "Optional. List of external references such as document IDs, URLs, ticket numbers.",
-          "items": {}
-        },
-        "acceptance_criteria": {
-          "type": "array",
-          "description": "Optional. List of acceptance criteria for the requirement.",
           "items": {
-            "type": "string"
+            "oneOf": [
+              {
+                "type": "object",
+                "description": "Structured external reference.",
+                "properties": {
+                  "label": { "type": "string", "description": "Short name or description." },
+                  "url": { "type": "string", "format": "uri", "description": "URI of the resource." }
+                },
+                "required": ["label"],
+                "additionalProperties": false
+              },
+              { "type": "string", "description": "Unstructured external reference string." }
+            ]
+          }
+        },
+        "acceptance_criteria": { "type": "array", "description": "Optional. List of acceptance criteria for the requirement.", "items": { "type": "string" } },
+        "linked_features": { "type": "array", "description": "Optional. Associated feature or epic IDs from project management tools.", "items": { "type": "string" } },
+        "deprecated_reason": { "type": "string", "description": "Optional. If the requirement is deprecated, this explains why." },
+        "domain": { "type": "string", "description": "Optional. System, component or domain the requirement applies to." },
+        "metadata": { "type": "object", "description": "Optional. Arbitrary key-value metadata for custom project use.", "additionalProperties": { "type": "string" } },
+        "rationale": { "type": "string", "description": "Optional. Justification or reasoning behind the requirement." },
+        "verification": { "type": "string", "enum": ["Test", "Analysis", "Inspection", "Demonstration", "Review", "None"], "description": "Optional. Method by which this requirement will be verified." },
+        "priority": { "type": "string", "enum": ["Low", "Medium", "High", "Critical"], "description": "Optional. Priority level indicating importance of the requirement." },
+        "traceability": {
+          "type": "object",
+          "description": "Optional traceability links to other artefacts.",
+          "properties": {
+            "design": { "type": "array", "items": { "type": "string" } },
+            "test": { "type": "array", "items": { "type": "string" } },
+            "code": { "type": "array", "items": { "type": "string" } }
           },
-          "examples": []
+          "additionalProperties": false
         },
-        "linked_features": {
+        "risk": { "type": "string", "description": "Risk impact if this requirement is not met.", "enum": ["None", "Low", "Medium", "High", "Critical"] },
+        "release": { "type": "string", "description": "Milestone or release this requirement is planned for." },
+        "state": {
+          "type": "string",
+          "description": "The current lifecycle state of the requirement.",
+          "enum": ["draft", "review", "approved", "implemented", "verified", "deprecated"]
+        },
+        "comments": {
           "type": "array",
-          "description": "Optional. Associated feature or epic IDs from project management tools."
+          "description": "Optional. Comments or discussion history for the requirement.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "author": { "type": "string", "description": "Comment author." },
+              "date": { "type": "string", "format": "date-time", "description": "Date/time of the comment (ISO 8601)." },
+              "text": { "type": "string", "description": "Comment text." }
+            },
+            "required": ["author", "date", "text"],
+            "additionalProperties": false
+          }
         },
-        "deprecated_reason": {},
-        "domain": {},
-        "metadata": {},
-        "rationale": {},
-        "verification": {},
-        "priority": {},
-        "traceability": {},
-        "risk": {},
-        "release": {},
-        "state": {}
+        "custom": {
+          "type": "object",
+          "description": "Optional. Custom key-value pairs for project-specific extensions.",
+          "additionalProperties": true
+        }
       },
-      "required": [
-        "id",
-        "title",
-        "description"
-      ],
+      "required": ["id", "title", "description"],
       "additionalProperties": false,
       "allOf": [
-        {},
-        {}
+        {
+          "if": { "properties": { "state": { "const": "deprecated" } } },
+          "then": { "required": ["deprecated_reason"] }
+        },
+        {
+          "if": { "properties": { "status": { "properties": { "verified": { "const": true } } } } },
+          "then": { "properties": { "status": { "required": ["implemented"] } } }
+        }
       ]
     }
   },
