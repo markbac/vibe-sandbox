@@ -1,137 +1,488 @@
-# filepath: data/reqs.yml
+# Example requirements YAML for demo (fully featured, schema-aligned)
 project:
+  name: Smart Thermostat
+  version: 1.0.0
   code: SMARTTHRM
   summary: Requirements for the SMARTTHRM project, a connected smart thermostat with app and cloud integration.
+  description: |
+    The SMARTTHRM project is a next-generation smart thermostat with Wi-Fi, Bluetooth, and cloud integration. It supports advanced scheduling, user roles, and secure remote access.
+  stakeholders:
+    - Alice Smith
+    - Bob Jones
+    - Carol Lee
   external_references:
-  - label: Market Requirements Document
-    url: https://example.com/docs/mrd
-  - IEC-60730
-  - EN-ISO-9241
+    - label: Market Requirements Document
+      url: https://example.com/docs/mrd
+    - IEC-60730
+    - EN-ISO-9241
+
 requirements:
 - id: REQ_SMARTTHRM_000001
   title: Temperature Control
-  description: "The system shall maintain the setpoint temperature within \xB10.5\xB0 C under steady-state conditions."
+  description: The system shall maintain the setpoint temperature within ±0.5°C under steady-state conditions.
+  type: Functional
+  category: Performance
+  tags: [System, Performance, Control]
+  status:
+    implemented: true
+    verified: false
+  cross_references:
+    depends_on: [REQ_SMARTTHRM_000002]
+    related_to: [REQ_SMARTTHRM_000005]
+  priority: Critical
+  state: implemented
   rationale: To provide consistent user comfort and comply with energy efficiency standards.
   verification: Test
-  priority: Critical
-  acceptance_criteria: Setpoint maintained within limits for 95% of operating time.
-  safety_classification: SIL1
-  linked_features:
-  - FEATURE-001
-  deprecated_reason: ''
+  risk: Medium
+  release: v1.0
   domain: control
   metadata:
     release: '1.0'
     team: firmware
+  custom:
+    vendor: Acme Controls
+    doc_ref: DOC-001
+  acceptance_criteria:
+    - Setpoint maintained within limits for 95% of operating time.
+    - System recovers from sensor error within 2 minutes.
+  linked_features:
+    - FEATURE-001
+    - FEATURE-002
   external_references:
-  - THERMAL-REQ-01
+    - THERMAL-REQ-01
+    - label: Energy Star Spec
+      url: https://example.com/energy-star
+  comments:
+    - author: Alice Smith
+      date: 2025-06-10T09:00:00Z
+      text: Initial requirement drafted.
+    - author: Bob Jones
+      date: 2025-06-11T10:30:00Z
+      text: Added acceptance criteria for error recovery.
   children:
-  - id: REQ_SMARTTHRM_000002
-    title: PID Loop Implementation
+    - id: REQ_SMARTTHRM_000002
+      title: PID Loop Implementation
+      description: The control algorithm shall use a PID loop with auto-tuning.
+      type: Functional
+      category: Performance
+      tags: [Firmware, Control]
+      status:
+        implemented: false
+        verified: false
+      cross_references:
+        depends_on: []
+      priority: High
+      state: draft
+      rationale: PID control provides optimal temperature regulation.
+      verification: Test
+      risk: Low
+      release: v1.0
+      domain: control
+      metadata:
+        release: '1.0'
+        team: firmware
+      custom:
+        doc_ref: DOC-002
+      acceptance_criteria:
+        - PID loop maintains setpoint within ±0.5°C.
+      linked_features:
+        - FEATURE-002
+      external_references:
+        - label: PID Whitepaper
+          url: https://example.com/pid-paper
+      comments:
+        - author: Carol Lee
+          date: 2025-06-11T11:00:00Z
+          text: Needs review by controls team.
+      children: []
+
 - id: REQ_SMARTTHRM_000005
   title: User Interface
   description: The thermostat shall provide a local display and capacitive buttons for user interaction.
+  type: Functional
+  category: Usability
+  tags: [UI, Usability]
+  status:
+    implemented: false
+    verified: false
+  cross_references:
+    depends_on: []
+    related_to: [REQ_SMARTTHRM_000001]
+  priority: High
+  state: draft
   rationale: To allow control without needing the mobile app.
   verification: Test
-  priority: High
-  acceptance_criteria: Users can view temperature and adjust settings locally.
+  risk: Low
+  release: v1.0
   domain: UI
   metadata:
     release: '1.0'
     team: ui
+  custom:
+    doc_ref: DOC-UI-01
+  acceptance_criteria:
+    - Users can view temperature and adjust settings locally.
+  linked_features:
+    - FEATURE-003
   external_references:
-  - UX-REQ-03
+    - UX-REQ-03
+  comments:
+    - author: Alice Smith
+      date: 2025-06-10T09:30:00Z
+      text: UI requirements drafted.
   children:
-  - id: REQ_SMARTTHRM_000006
-    title: Display Requirements
-    priority: Medium
-  - id: REQ_SMARTTHRM_000007
-    title: Touch Interface Response
-    priority: Medium
+    - id: REQ_SMARTTHRM_000006
+      title: Display Requirements
+      description: The display shall be a 2.4” TFT LCD with 240x320 resolution.
+      type: Non-Functional
+      category: Usability
+      tags: [UI, Hardware]
+      status:
+        implemented: false
+        verified: false
+      cross_references:
+        depends_on: []
+      priority: Medium
+      state: draft
+      rationale: High-resolution display improves usability.
+      verification: Inspection
+      risk: None
+      release: v1.0
+      domain: UI
+      metadata:
+        release: '1.0'
+        team: ui
+      custom:
+        doc_ref: DOC-UI-02
+      acceptance_criteria:
+        - Display is readable in all lighting conditions.
+      linked_features:
+        - FEATURE-004
+      external_references:
+        - label: Display Spec
+          url: https://example.com/display
+      comments: []
+      children: []
+    - id: REQ_SMARTTHRM_000007
+      title: Touch Interface Response
+      description: The touch interface shall respond within 100ms.
+      type: Non-Functional
+      category: Usability
+      tags: [UI, Usability]
+      status:
+        implemented: false
+        verified: false
+      cross_references:
+        depends_on: []
+      priority: Medium
+      state: draft
+      rationale: Fast response is critical for user satisfaction.
+      verification: Test
+      risk: Low
+      release: v1.0
+      domain: UI
+      metadata:
+        release: '1.0'
+        team: ui
+      custom:
+        doc_ref: DOC-UI-03
+      acceptance_criteria:
+        - Touch response time measured in user tests.
+      linked_features:
+        - FEATURE-005
+      external_references:
+        - label: Touch Spec
+          url: https://example.com/touch
+      comments: []
+      children: []
+
 - id: REQ_SMARTTHRM_000008
   title: Connectivity
   description: The thermostat shall support Wi-Fi and Bluetooth LE for local and cloud connectivity.
+  type: Functional
+  category: Performance
+  tags: [System, Connectivity, IoT]
+  status:
+    implemented: false
+    verified: false
+  cross_references:
+    depends_on: []
+  priority: High
+  state: draft
   rationale: To allow smartphone pairing and remote access.
   verification: Test
-  priority: High
+  risk: Medium
+  release: v1.0
   domain: connectivity
+  metadata:
+    release: '1.0'
+    team: firmware
+  custom:
+    doc_ref: DOC-CONN-01
+  acceptance_criteria:
+    - Device can connect to Wi-Fi and BLE.
+  linked_features:
+    - FEATURE-006
+  external_references:
+    - label: Wi-Fi Spec
+      url: https://example.com/wifi
+  comments: []
   children:
-  - id: REQ_SMARTTHRM_000009
-    title: Wi-Fi Security
-    priority: High
-  - id: REQ_SMARTTHRM_000010
-    title: BLE Advertising
-    priority: Medium
+    - id: REQ_SMARTTHRM_000009
+      title: Wi-Fi Security
+      description: The device shall support WPA2 and WPA3 security.
+      type: Non-Functional
+      category: Security
+      tags: [Security, Connectivity]
+      status:
+        implemented: false
+        verified: false
+      cross_references:
+        depends_on: []
+      priority: High
+      state: draft
+      rationale: Security is essential for IoT devices.
+      verification: Review
+      risk: High
+      release: v1.0
+      domain: connectivity
+      metadata:
+        release: '1.0'
+        team: firmware
+      custom:
+        doc_ref: DOC-CONN-SEC
+      acceptance_criteria:
+        - Device passes security audit.
+      linked_features:
+        - FEATURE-007
+      external_references:
+        - label: WPA3 Spec
+          url: https://example.com/wpa3
+      comments: []
+      children: []
+    - id: REQ_SMARTTHRM_000010
+      title: BLE Advertising
+      description: The device shall advertise its presence using BLE for pairing.
+      type: Functional
+      category: Performance
+      tags: [Connectivity, IoT]
+      status:
+        implemented: false
+        verified: false
+      cross_references:
+        depends_on: []
+      priority: Medium
+      state: draft
+      rationale: BLE advertising enables easy pairing.
+      verification: Test
+      risk: Low
+      release: v1.0
+      domain: connectivity
+      metadata:
+        release: '1.0'
+        team: firmware
+      custom:
+        doc_ref: DOC-BLE-ADV
+      acceptance_criteria:
+        - Device is discoverable via BLE.
+      linked_features:
+        - FEATURE-008
+      external_references:
+        - label: BLE Spec
+          url: https://example.com/ble
+      comments: []
+      children: []
+
 - id: REQ_SMARTTHRM_000011
   title: Security
   description: The device shall implement secure boot, firmware signing, and secure storage for credentials.
+  type: Non-Functional
+  category: Security
+  tags: [Security, Firmware]
+  status:
+    implemented: false
+    verified: false
+  cross_references:
+    depends_on: []
+  priority: Critical
+  state: draft
   rationale: To protect against unauthorised firmware or data breaches.
   verification: Review
-  priority: Critical
+  risk: High
+  release: v1.0
   domain: security
+  metadata:
+    release: '1.0'
+    team: firmware
+  custom:
+    doc_ref: DOC-SEC-01
+  acceptance_criteria:
+    - Device passes security review.
+  linked_features:
+    - FEATURE-009
+  external_references:
+    - label: Security Spec
+      url: https://example.com/security
+  comments: []
   children:
-  - id: REQ_SMARTTHRM_000012
-    title: Secure Boot
-    priority: High
-  - id: REQ_SMARTTHRM_000013
-    title: Credential Storage
-    priority: High
+    - id: REQ_SMARTTHRM_000012
+      title: Secure Boot
+      description: The device shall verify firmware signatures at boot.
+      type: Non-Functional
+      category: Security
+      tags: [Security, Firmware]
+      status:
+        implemented: false
+        verified: false
+      cross_references:
+        depends_on: []
+      priority: High
+      state: draft
+      rationale: Prevents unauthorized firmware.
+      verification: Test
+      risk: High
+      release: v1.0
+      domain: security
+      metadata:
+        release: '1.0'
+        team: firmware
+      custom:
+        doc_ref: DOC-SEC-BOOT
+      acceptance_criteria:
+        - Device rejects unsigned firmware.
+      linked_features:
+        - FEATURE-010
+      external_references:
+        - label: Boot Spec
+          url: https://example.com/boot
+      comments: []
+      children: []
+    - id: REQ_SMARTTHRM_000013
+      title: Credential Storage
+      description: Credentials shall be stored in encrypted flash.
+      type: Non-Functional
+      category: Security
+      tags: [Security, Firmware]
+      status:
+        implemented: false
+        verified: false
+      cross_references:
+        depends_on: []
+      priority: High
+      state: draft
+      rationale: Protects user credentials from theft.
+      verification: Test
+      risk: High
+      release: v1.0
+      domain: security
+      metadata:
+        release: '1.0'
+        team: firmware
+      custom:
+        doc_ref: DOC-SEC-CRED
+      acceptance_criteria:
+        - Credentials are encrypted at rest.
+      linked_features:
+        - FEATURE-011
+      external_references:
+        - label: Storage Spec
+          url: https://example.com/storage
+      comments: []
+      children: []
+
 - id: REQ_SMARTTHRM_000014
   title: Access Control
   description: The system shall implement role-based access control (RBAC) for local and remote access.
+  type: Functional
+  category: Security
+  tags: [Security, API]
+  status:
+    implemented: false
+    verified: false
+  cross_references:
+    depends_on: []
+  priority: High
+  state: draft
   rationale: To limit functionality based on user roles.
   verification: Review
-  priority: High
+  risk: Medium
+  release: v1.0
+  domain: security
+  metadata:
+    release: '1.0'
+    team: firmware
+  custom:
+    doc_ref: DOC-SEC-AC
+  acceptance_criteria:
+    - Only authorized users can access advanced settings.
+  linked_features:
+    - FEATURE-012
+  external_references:
+    - label: RBAC Spec
+      url: https://example.com/rbac
+  comments: []
   children:
-  - id: REQ_SMARTTHRM_000015
-    title: Admin and User Roles
-    priority: Medium
-  - id: REQ_SMARTTHRM_000016
-    title: Authentication Timeout
-    priority: Medium
-- id: REQ_SMARTTHRM_000017
-  title: Display
-  description: "The thermostat shall include a 2.4\u201D TFT LCD with backlight and 240x320 resolution."
-  rationale: To provide clear information display.
-  verification: Inspection
-  priority: Medium
-- id: REQ_SMARTTHRM_000018
-  title: API Integration
-- id: REQ_SMARTTHRM_000021
-  title: Thermostatic Function
-- id: REQ_SMARTTHRM_000024
-  title: Safety & Compliance
-- id: REQ_SMARTTHRM_000028
-  title: System Configuration & Storage
-- id: REQ_SMARTTHRM_000032
-  title: Test Requirement 32
-  - DOC-32
-- id: REQ_SMARTTHRM_000033
-  title: Test Requirement 33
-  - DOC-33
-- id: REQ_SMARTTHRM_000034
-  title: Test Requirement 34
-  - DOC-34
-- id: REQ_SMARTTHRM_000035
-  title: Test Requirement 35
-  - DOC-35
-- id: REQ_SMARTTHRM_000036
-  title: Test Requirement 36
-  - DOC-36
-- id: REQ_SMARTTHRM_000037
-  title: Test Requirement 37
-  - DOC-37
-- id: REQ_SMARTTHRM_000038
-  title: Test Requirement 38
-  - DOC-38
-- id: REQ_SMARTTHRM_000039
-  title: Test Requirement 39
-  - DOC-39
-- id: REQ_SMARTTHRM_000040
-  title: Test Requirement 40
-  - DOC-40
-- id: REQ_SMARTTHRM_000041
-  title: Test Requirement 41
-  - DOC-41
-- id: REQ_SMARTTHRM_000050
-  title: Deep Structure Example
+    - id: REQ_SMARTTHRM_000015
+      title: Admin and User Roles
+      description: "The system shall support at least two roles: admin and user."
+      type: Functional
+      category: Security
+      tags: [Security, API]
+      status:
+        implemented: false
+        verified: false
+      cross_references:
+        depends_on: []
+      priority: Medium
+      state: draft
+      rationale: Different roles have different permissions.
+      verification: Test
+      risk: Low
+      release: v1.0
+      domain: security
+      metadata:
+        release: '1.0'
+        team: firmware
+      custom:
+        doc_ref: DOC-SEC-ROLES
+      acceptance_criteria:
+        - Admin can change all settings; user can only view.
+      linked_features:
+        - FEATURE-013
+      external_references:
+        - label: Roles Spec
+          url: https://example.com/roles
+      comments: []
+      children: []
+    - id: REQ_SMARTTHRM_000016
+      title: Authentication Timeout
+      description: The system shall log out users after 5 minutes of inactivity.
+      type: Non-Functional
+      category: Security
+      tags: [Security, API]
+      status:
+        implemented: false
+        verified: false
+      cross_references:
+        depends_on: []
+      priority: Medium
+      state: draft
+      rationale: Prevents unauthorized access if left unattended.
+      verification: Test
+      risk: Medium
+      release: v1.0
+      domain: security
+      metadata:
+        release: '1.0'
+        team: firmware
+      custom:
+        doc_ref: DOC-SEC-TIMEOUT
+      acceptance_criteria:
+        - User is logged out after 5 minutes of inactivity.
+      linked_features:
+        - FEATURE-014
+      external_references:
+        - label: Timeout Spec
+          url: https://example.com/timeout
+      comments: []
+      children: []
