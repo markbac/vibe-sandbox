@@ -50,7 +50,11 @@ This schema defines a flexible, hierarchical structure for managing requirements
 - **verification** (string, optional):
   - How the requirement will be verified (e.g., Test, Review).
 - **priority** (string, optional):
-  - Priority level (e.g., High, Medium, Low).
+  - MoSCoW priority. Allowed values: `Must`, `Should`, `Could`, `Won't`.
+- **type** (string, optional):
+  - Requirement type. Allowed values: `Functional`, `Non-Functional`.
+- **category** (string, optional):
+  - Requirement category. Allowed values: `Performance`, `Security`, `Usability`, `Reliability`, `Maintainability`, `Portability`, `Other`.
 - **traceability** (object, optional):
   - Traceability information for audits or compliance.
 - **risk** (string, optional):
@@ -59,6 +63,19 @@ This schema defines a flexible, hierarchical structure for managing requirements
   - Release version or milestone.
 - **state** (string, optional):
   - Current state (e.g., approved, draft, deprecated).
+
+## Project Object Fields
+
+- **name** (string, required):
+  - Project name.
+- **version** (string, required):
+  - Project version.
+- **summary** (string, required):
+  - High-level description of the project or product.
+- **description** (string, required):
+  - Detailed project description.
+- **stakeholders** (array of strings, required):
+  - List of project stakeholders.
 
 ## Key Features
 

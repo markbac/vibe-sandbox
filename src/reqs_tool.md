@@ -2,55 +2,52 @@
 
 ## Overview
 
-`reqs_tool.py` is an interactive Streamlit web app for creating, editing, and visualizing hierarchical requirements stored in YAML format. It supports project-level metadata, validation against a schema, and advanced features like cross-references and traceability.
+`reqs_tool.py` is an interactive Streamlit web app for creating, editing, and visualizing hierarchical requirements in YAML format. It supports project-level metadata, schema validation, and advanced features like cross-references, traceability, and exporting requirements.
 
 ## Features
 
-- Upload, view, and edit requirements YAML files
-- Hierarchical (parent/child) requirements tree
-- Add, edit, and delete requirements interactively
-- Cross-reference and traceability support
-- Project metadata display
-- Schema validation (using `schema/reqs-schema.json`)
-- Export and download updated YAML
+- **Tree View:** Browse and expand/collapse a hierarchical requirements tree in the sidebar.
+- **Single-Select Editing:** Select a requirement to view and edit all its fields, including nested/complex types, using a UI auto-generated from the schema.
+- **Add Child Requirements:** Add child requirements to any selected requirement.
+- **Add Top-Level Requirements:** Deselect all to add a new top-level requirement.
+- **Project Metadata:** Edit project-level metadata in the sidebar.
+- **Schema Validation:** All requirements are validated against the JSON schema.
+- **Export:** Download the current requirements and project metadata as a YAML file.
 
-## Usage
+## How to Use
 
-1. **Start the app:**
+1. **Start the App:**
 
    ```pwsh
-   streamlit run src/reqs_tool.py
+   streamlit run src/reqs-tool.py
    ```
    Or use the batch file:
    ```pwsh
    ./tools/reqs.bat
    ```
 
-2. **Upload a requirements YAML file** (or start from scratch)
+2. **Upload Requirements YAML:**
 
-3. **Browse and edit** the requirements tree in the sidebar
+   - Use the sidebar to upload an existing requirements YAML file, or start from scratch.
 
-4. **Edit details** for any selected requirement
+3. **Browse and Edit:**
 
-5. **Add child or top-level requirements** as needed
+   - Use the sidebar tree to select a requirement for editing.
+   - Edit all fields, including arrays and objects, in the main panel.
+   - Add child requirements to any selected requirement.
+   - Deselect all to add a new top-level requirement.
 
-6. **Download/export** the updated YAML file
+4. **Edit Project Metadata:**
 
-## File Structure
+   - Use the sidebar form to edit project-level fields (name, version, summary, etc).
 
-- Requirements YAML files: `data/`
-- Schema: `schema/reqs-schema.json`
-- Example docs: `docs/`
+5. **Export:**
 
-## Dependencies
+   - Use the export section to download the current requirements and metadata as a YAML file.
 
-- streamlit
-- pyyaml
-- jsonschema
-- streamlit-tree-select
+## Notes
 
-## Tips
-
-- Use the schema for validation to ensure your requirements files are well-formed.
+- Only one requirement can be selected at a time for editing.
+- The UI is dynamically generated from the schema, so it adapts to schema changes.
 - All changes are in-memory until you export/download the YAML.
-- See the main README for more on the schema and project structure.
+- See the main README and schema files for more details on requirements structure.
