@@ -1,10 +1,10 @@
-# filepath: tools/reqs.bat
+REM filepath: tools/reqs.bat
 @echo off
 title Smart Thermostat Requirements Tool
 
 REM Launch the Streamlit app
 echo Starting Streamlit app...
-start "" /B python -m streamlit run reqs-tool.py
+start "" /B python -m streamlit run src/reqs-tool.py
 
 REM Give the app time to start
 timeout /t 3 >nul
